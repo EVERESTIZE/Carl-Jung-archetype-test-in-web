@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>칼 융의 심리 원형 테스트</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 32px 24px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+    .progress-bar {
+      height: 6px;
+      background: #334155;
+      border-radius: 3px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .progress {
+      height: 100%;
+      background: #38bdf8;
+      width: 0%;
+      transition: width 0.3s;
+    }
+    .question-title {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+    .question-text {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 28px;
+      min-height: 60px;
+    }
+    .choice-btn {
+      width: 100%;
+      text-align: left;
+      background: #334155;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .choice-btn:hover {
+      background: #475569;
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+    .result-box {
+      text-align: center;
+    }
+    .result-tag {
+      color: #38bdf8;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+    .result-title {
+      font-size: 1.7rem;
+      margin-bottom: 16px;
+    }
+    .result-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #cbd5e1;
+      margin-bottom: 24px;
+      white-space: pre-line;
+      background: #0f172a;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: left;
+    }
+    .restart-btn {
+      background: #38bdf8;
+      color: #0f172a;
+      border: none;
+      font-weight: bold;
+      padding: 14px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .restart-btn:hover {
+      background: #7dd3fc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="quiz-container">
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+    <div class="question-title" id="q-counter">질문 1 / 4</div>
+    <div class="question-text" id="q-text">질문 내용이 여기에 들어옵니다.</div>
+    <div id="choices-container"></div>
+  </div>
+
+  <script>
+    // 1. 질문 데이터 (각 선택지가 부여하는 원형 타입 명시)
+    const questions = [
+      {
+        question: "주말에 예상치 못한 자유 시간이 하루 생겼습니다. 당신의 선택은?",
+        choices: [
+          { text: "평소 미뤄뒀던 프로젝트를 몰입해서 완벽하게 끝낸다.", type: "HERO" },
+          { text: "아직 가보지 않은 낯선 동네나 장소로 무작정 떠난다.", type: "EXPLORER" },
+          { text: "조용히 흥미로운 책이나 다큐멘터리를 보며 지식을 쌓는다.", type: "SAGE" },
+          { text: "소중한 사람에게 연락해 맛있는 음식을 차려주거나 위로해 준다.", type: "CAREGIVER" }
+        ]
+      },
+      {
+        question: "친구가 큰 고민을 털어놓으며 힘들어할 때, 당신의 주된 반응은?",
+        choices: [
+          { text: "\"당장 해결할 방법을 찾자!\" 하며 실행 가능한 행동 계획을 세운다.", type: "HERO" },
+          { text: "\"잠깐 기분 전환하러 훌쩍 떠나볼래?\" 하며 새로운 활기를 준다.", type: "EXPLORER" },
+          { text: "근본적인 원인을 조용히 분석하고 객관적인 통찰을 제공한다.", type: "SAGE" },
+          { text: "따뜻하게 안아주고 끝까지 경청하며 감정을 전적으로 품어준다.", type: "CAREGIVER" }
+        ]
+      },
+      {
+        question: "인생에서 가장 견디기 힘든 상태는 무엇인가요?",
+        choices: [
+          { text: "스스로 무기력하고 나약하다고 느껴질 때", type: "HERO" },
+          { text: "규칙과 틀에 갇혀 자유를 뺏기고 일상이 지루할 때", type: "EXPLORER" },
+          { text: "진실을 알지 못하고 편견과 무지에 휘둘릴 때", type: "SAGE" },
+          { text: "내 주변의 소중한 사람들이 고통받는 것을 지켜볼 때", type: "CAREGIVER" }
+        ]
+      },
+      {
+        question: "팀 프로젝트를 진행할 때 당신이 자연스럽게 맡게 되는 역할은?",
+        choices: [
+          { text: "목표를 향해 추진력을 발휘하고 돌파구를 뚫는 리더", type: "HERO" },
+          { text: "남들이 생각하지 못한 참신한 길과 대안을 찾아내는 개척자", type: "EXPLORER" },
+          { text: "자료를 정확히 조사하고 사실 관계를 검토하는 브레인", type: "SAGE" },
+          { text: "팀원들의 분위기를 챙기고 지치지 않게 서포트하는 조력자", type: "CAREGIVER" }
+        ]
+      }
+    ];
+
+    // 2. 결과 원형 데이터
+    const archetypes = {
+      HERO: {
+        title: "영웅 (The Hero)",
+        tag: "성취와 극복의 무의식",
+        desc: "당신은 도전을 두려워하지 않고 한계를 돌파하려는 강인한 의지를 지녔습니다. 어려움 속에서도 능력을 입증하고자 하며, 목표를 향한 추진력이 탁월합니다.\n\n• 강점: 끈기, 리더십, 결단력\n• 그림자: 실패에 대한 두려움, 오만해질 위험"
+      },
+      EXPLORER: {
+        title: "탐험가 (The Explorer)",
+        tag: "자유와 발견의 무의식",
+        desc: "당신은 반복되는 일상과 통제를 벗어나 자기만의 길을 찾고 싶어 합니다. 새로운 경험을 통해 진정한 자아를 발견하며, 틀에 얽매이지 않는 삶을 추구합니다.\n\n• 강점: 독립심, 호기심, 개방성\n• 그림자: 방황, 관계에 대한 회피 성향"
+      },
+      SAGE: {
+        title: "현자 (The Sage)",
+        tag: "진리와 통찰의 무의식",
+        desc: "당신은 세상을 깊이 이해하고 진실을 탐구하는 지적인 시선을 가졌습니다. 감정적인 충동보다 객관적 분석과 지혜를 신뢰하며 본질을 꿰뚫어 봅니다.\n\n• 강점: 통찰력, 분석력, 냉철한 판단\n• 그림자: 과도한 생각으로 인한 행동 지연, 감정 차단"
+      },
+      CAREGIVER: {
+        title: "조력자 (The Caregiver)",
+        tag: "보호와 연민의 무의식",
+        desc: "당신은 타인을 돕고 돌보는 따뜻한 공감 능력을 가지고 있습니다. 주변 사람들에게 안전한 안식처가 되어주며, 이타적인 헌신에서 깊은 보람을 느낍니다.\n\n• 강점: 공감 능력, 배려, 신뢰성\n• 그림자: 자기희생으로 인한 번아웃, 과보호"
+      }
+    };
+
+    let currentIndex = 0;
+    // 점수 저장 객체
+    const scores = { HERO: 0, EXPLORER: 0, SAGE: 0, CAREGIVER: 0 };
+
+    function renderQuestion() {
+      const q = questions[currentIndex];
+      document.getElementById('q-counter').innerText = `질문 ${currentIndex + 1} / ${questions.length}`;
+      document.getElementById('q-text').innerText = q.question;
+      
+      const percent = (currentIndex / questions.length) * 100;
+      document.getElementById('progress').style.width = `${percent}%`;
+
+      const choicesBox = document.getElementById('choices-container');
+      choicesBox.innerHTML = '';
+
+      q.choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.innerText = choice.text;
+        btn.onclick = () => selectChoice(choice.type);
+        choicesBox.appendChild(btn);
+      });
+    }
+
+    function selectChoice(type) {
+      scores[type] += 1;
+      currentIndex++;
+
+      if (currentIndex < questions.length) {
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      // 가장 점수가 높은 원형 판별
+      let highestType = 'HERO';
+      let maxScore = -1;
+      for (const type in scores) {
+        if (scores[type] > maxScore) {
+          maxScore = scores[type];
+          highestType = type;
+        }
+      }
+
+      const result = archetypes[highestType];
+      const container = document.getElementById('quiz-container');
+      
+      container.innerHTML = `
+        <div class="result-box">
+          <div class="result-tag">${result.tag}</div>
+          <h2 class="result-title">${result.title}</h2>
+          <div class="result-desc">${result.desc}</div>
+          <button class="restart-btn" onclick="restartQuiz()">다시 검사하기</button>
+        </div>
+      `;
+    }
+
+    function restartQuiz() {
+      currentIndex = 0;
+      for (const key in scores) scores[key] = 0;
+      location.reload();
+    }
+
+    // 검사 시작
+    renderQuestion();
+  </script>
+</body>
+</html>
