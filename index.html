@@ -130,7 +130,7 @@
       border: 1px solid #334155;
       padding: 15px 18px;
       border-radius: 12px;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       line-height: 1.4;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -141,6 +141,17 @@
       transform: translateY(-2px);
       color: #ffffff;
     }
+
+.intro-title,
+.intro-desc,
+.result-title,
+.question-text,
+.choice-btn,
+.result-desc {
+  word-break: keep-all; /* 단어가 중간에 잘리지 않고 통째로 다음 줄로 이동 */
+  overflow-wrap: break-word;
+}
+
 
     /* 결과 화면 스타일 */
     .result-box {
