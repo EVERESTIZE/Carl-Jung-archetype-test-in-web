@@ -11,6 +11,7 @@
       background: #111111;
       color: #eeeeee;
       min-height: 100vh;
+      min-height: 100dvh; /* 모바일용 */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -170,7 +171,11 @@
 
     /* 시작 / 다시하기 버튼 */
     .primary-btn {
-      width: 100%;
+      width: auto;
+      min-width: 50%;
+      margin: 0 auto;
+      display: block;
+      
       background: #ffffff;
       color: #111111;
       border: none;
