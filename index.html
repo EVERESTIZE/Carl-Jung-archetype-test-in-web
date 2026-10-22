@@ -21,27 +21,27 @@
 
     body {
       font-family: 'choiceFont', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #08090c;
+      background: #06070a;
       color: #e2e8f0;
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 12px;
       overflow-x: hidden;
     }
 
-    /* 배경 은하/성운 느낌 미세 노이즈 글로우 */
+    /* 배경 은은한 신비로운 글로우 */
     body::before {
       content: "";
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, rgba(99, 102, 241, 0.03) 45%, transparent 70%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, rgba(56, 189, 248, 0.03) 40%, transparent 70%);
       z-index: -1;
       pointer-events: none;
     }
@@ -52,75 +52,73 @@
       position: relative;
     }
 
-    /* 공통 카드 보드 */
     .board {
-      background: #0f131d;
+      background: #0c0f17;
       border: 1px solid #1e2638;
       border-radius: 20px;
-      padding: 28px 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      padding: 24px 18px 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(212, 175, 55, 0.15);
       position: relative;
       overflow: hidden;
     }
 
-    /* 상단 금장 아치 장식 */
     .tarot-arch {
-      width: 46px;
-      height: 46px;
-      border: 1px solid #38bdf8;
+      width: 44px;
+      height: 44px;
+      border: 1px solid #d4af37;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 16px;
-      color: #38bdf8;
+      margin: 0 auto 14px;
+      color: #d4af37;
       font-size: 1.1rem;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
     }
 
-    /* 1. 인트로 씬 */
+    /* 1. 인트로 화면 */
     .intro-scene {
       text-align: center;
       animation: fadeIn 0.4s ease;
     }
     .intro-tag {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 2px;
-      color: #94a3b8;
+      color: #d4af37;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .intro-title {
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       font-weight: 800;
       line-height: 1.4;
       color: #f8fafc;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       word-break: keep-all;
     }
     .intro-tarot-box {
-      background: #090c14;
-      border: 1px dashed #26334d;
+      background: #07090f;
+      border: 1px dashed #283347;
       border-radius: 12px;
-      padding: 20px 16px;
-      margin-bottom: 22px;
+      padding: 18px 16px;
+      margin-bottom: 20px;
       text-align: left;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       line-height: 1.7;
       color: #94a3b8;
       word-break: keep-all;
     }
     .intro-tarot-box strong {
-      color: #38bdf8;
+      color: #d4af37;
     }
     .intro-info {
       display: flex;
       justify-content: center;
       gap: 14px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: #64748b;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     /* 2. 타로 테스트 진행 씬 */
@@ -132,92 +130,148 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
-      font-size: 0.8rem;
-      color: #64748b;
+      margin-bottom: 10px;
+      font-size: 0.75rem;
+      color: #94a3b8;
       letter-spacing: 1px;
+    }
+    .status-bar .counter {
+      color: #d4af37;
     }
     .progress-line {
       height: 4px;
       background: #192233;
       border-radius: 2px;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      background: linear-gradient(90deg, #d4af37, #38bdf8);
       transition: width 0.3s ease;
     }
     .question-prompt {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       line-height: 1.5;
       color: #ffffff;
-      margin-bottom: 20px;
-      min-height: 54px;
+      margin-bottom: 8px;
+      min-height: 52px;
       text-align: center;
       word-break: keep-all;
     }
 
-    /* 타로 카드 덱 리스트 */
-    .tarot-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .fan-guide {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
     }
 
-    .tarot-card {
+    /* --- 부채꼴(반호) 카드 배치 영역 --- */
+    .card-fan-area {
       position: relative;
-      background: linear-gradient(145deg, #131926, #0e131d);
-      border: 1px solid #232d42;
-      border-radius: 12px;
-      padding: 14px 16px;
-      cursor: pointer;
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+      height: 310px;
       display: flex;
-      align-items: center;
-      gap: 12px;
-      text-align: left;
-    }
-    .tarot-card:hover {
-      border-color: #38bdf8;
-      background: linear-gradient(145deg, #182236, #121824);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(56, 189, 248, 0.15);
-    }
-    .card-rune {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 1px solid #334155;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
-      color: #64748b;
-      flex-shrink: 0;
-      transition: all 0.2s ease;
+      align-items: flex-end;
+      perspective: 1200px;
+      padding-bottom: 15px;
     }
-    .tarot-card:hover .card-rune {
-      border-color: #38bdf8;
-      color: #38bdf8;
-      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+
+    /* --- 기존 .tarot-card 너비 및 높이 수정 --- */
+.tarot-card {
+  position: absolute;
+  bottom: 15px;
+  width: 108px;        /* 135px -> 108px로 슬림화해 겹침 최소화 */
+  height: 185px;       /* 텍스트 줄바꿈 공간 확보 */
+  background: radial-gradient(circle at 50% 30%, #171d2b, #080a10);
+  border: 2px solid #d4af37;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 12px rgba(212, 175, 55, 0.25);
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transform-origin: 50% 150%; /* 회전축을 더 아래로 내려 부채꼴을 완만하게 형성 */
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.3s ease;
+}
+
+    /* 금박 안쪽 이중 프레임 */
+    .tarot-card::before {
+      content: "";
+      position: absolute;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .card-rune {
+      font-size: 0.75rem;
+      color: #d4af37;
+      letter-spacing: 1px;
     }
     .card-text {
-      font-size: 0.92rem;
-      color: #cbd5e1;
-      line-height: 1.45;
+      font-size: 0.75rem;
+      line-height: 1.42;
+      color: #f1f5f9;
       word-break: keep-all;
+      z-index: 1;
+      padding: 0 2px;
     }
+    .card-seal {
+      font-size: 0.72rem;
+      color: #d4af37;
+    }
+
+    /* 4장 반호형 부채꼴 배치 */
+    .tarot-card:nth-child(1) {
+      transform: translateX(-110px) translateY(-20px) rotate(-16deg);
+      z-index: 1;
+    }
+    .tarot-card:nth-child(2) {
+      transform: translateX(-37px) translateY(-30px) rotate(-5deg);
+      z-index: 2;
+    }
+    .tarot-card:nth-child(3) {
+      transform: translateX(37px) translateY(-30px) rotate(5deg);
+      z-index: 3;
+    }
+    .tarot-card:nth-child(4) {
+      transform: translateX(110px) translateY(-20px) rotate(16deg);
+      z-index: 4;
+    }
+
+    /* 마우스 호버 시 위로 솟아오르며 반듯하게 정렬 */
+    .tarot-card:hover {
+      transform: translateY(-50px) rotate(0deg) scale(1.08) !important;
+      z-index: 10 !important;
+      border-color: #fef08a;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.95), 0 0 25px rgba(254, 240, 138, 0.6);
+    }
+
+    /* 뽑힌 카드 연출: 중앙으로 솟구치며 나머지 카드들과 확실히 분리 */
+.tarot-card.is-picked {
+  transform: translateY(-70px) rotate(0deg) scale(1.18) !important;
+  border-color: #ffffff !important;
+  z-index: 30 !important;
+  transition: transform 0.35s ease;
+}
 
     /* 3. 영수증/티켓형 아카이브 결과 씬 */
     .ticket {
-      background: #090c14;
+      background: #080a10;
       border: 1px dashed #334155;
       border-radius: 14px;
-      padding: 24px 18px;
+      padding: 22px 16px;
       text-align: center;
       position: relative;
       animation: fadeIn 0.4s ease;
@@ -225,35 +279,35 @@
     .ticket-header {
       font-size: 0.72rem;
       letter-spacing: 3px;
-      color: #64748b;
+      color: #d4af37;
       margin-bottom: 6px;
       text-transform: uppercase;
     }
     .ticket-badge {
       display: inline-block;
-      background: rgba(56, 189, 248, 0.12);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      font-size: 0.8rem;
+      background: rgba(212, 175, 55, 0.12);
+      color: #fef08a;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      font-size: 0.78rem;
       padding: 4px 12px;
       border-radius: 16px;
       margin-bottom: 12px;
     }
     .ticket-title {
-      font-size: 1.65rem;
+      font-size: 1.55rem;
       font-weight: 800;
       color: #ffffff;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       word-break: keep-all;
     }
     .ticket-divider {
       height: 1px;
       border-bottom: 1px dashed #1e293b;
-      margin: 16px 0;
+      margin: 14px 0;
     }
     .ticket-desc {
       text-align: left;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       line-height: 1.7;
       color: #94a3b8;
       white-space: pre-line;
@@ -264,7 +318,7 @@
       padding: 16px;
     }
     .ticket-footer {
-      margin-top: 18px;
+      margin-top: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -277,31 +331,91 @@
       user-select: none;
     }
     .serial-no {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: #475569;
       letter-spacing: 1px;
     }
 
-    /* 골드/네온 메인 트리거 버튼 */
     .primary-btn {
       width: 100%;
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      color: #ffffff;
+      background: linear-gradient(135deg, #d4af37, #b48a1c);
+      color: #0b0e14;
       border: none;
       font-family: inherit;
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 800;
       padding: 14px 20px;
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.25);
+      box-shadow: 0 4px 18px rgba(212, 175, 55, 0.3);
       margin-top: 16px;
     }
     .primary-btn:hover {
-      opacity: 0.93;
+      opacity: 0.92;
       transform: translateY(-1px);
     }
+/* 12대 원형 도감 뷰어 컨테이너 */
+.archive-viewer {
+  display: none;
+  animation: fadeIn 0.3s ease;
+  text-align: center;
+}
+
+.viewer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  gap: 12px;
+}
+
+.nav-arrow-btn {
+  background: #131926;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  font-size: 1.1rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.nav-arrow-btn:hover {
+  background: #d4af37;
+  color: #080a10;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+.viewer-counter {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  letter-spacing: 2px;
+}
+
+/* 보조 버튼 스타일 (도감 열기 / 내 결과로 복귀) */
+.secondary-btn {
+  width: 100%;
+  background: transparent;
+  color: #d4af37;
+  border: 1px solid #d4af37;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+.secondary-btn:hover {
+  background: rgba(212, 175, 55, 0.12);
+  transform: translateY(-1px);
+}
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
@@ -318,10 +432,10 @@
       <div class="intro-scene" id="intro-view">
         <div class="tarot-arch">✦</div>
         <div class="intro-tag">Jungian Archetype Deck</div>
-        <h1 class="intro-title">당신의 무의식이 숨겨둔<br>24장의 타로 아카이브</h1>
+        <h1 class="intro-title">무의식이 숨겨둔<br>24장의 타로 아카이브</h1>
         <div class="intro-tarot-box">
           칼 구스타프 융은 모든 인간의 심연 속에 <strong>12가지 고유한 원형</strong>이 새겨져 있다고 보았습니다.<br><br>
-          스쳐 지나가는 질문마다 직관이 이끄는 카드를 뒤집으세요. 24번의 선택 끝에 당신의 의식을 조종하는 <strong>단 하나의 봉인된 원형 카드</strong>가 해금됩니다.
+          스쳐 지나가는 질문마다 직관이 이끄는 금박 카드를 뽑아 올리세요. 24번의 선택 끝에 당신의 무의식을 지배하는 <strong>단 하나의 봉인된 원형 카드</strong>가 해금됩니다.
         </div>
         <div class="intro-info">
           <span>덱 규모: 24 카드</span>
@@ -334,14 +448,15 @@
       <!-- 2. 테스트 진행 화면 -->
       <div id="quiz-scene">
         <div class="status-bar">
-          <span id="deck-counter">CARD 01 / 24</span>
-          <span>ARCANA PROTOCOL</span>
+          <span class="counter" id="deck-counter">CARD 01 / 24</span>
+          <span>SELECT A CARD</span>
         </div>
         <div class="progress-line">
           <div class="progress-fill" id="progress-line"></div>
         </div>
         <div class="question-prompt" id="prompt-text">질문 내용이 표시됩니다.</div>
-        <div class="tarot-grid" id="cards-container"></div>
+        <div class="fan-guide">▼ 직관이 닿는 카드를 선택해 위로 뽑아내세요 ▼</div>
+        <div class="card-fan-area" id="cards-container"></div>
       </div>
 
     </div>
@@ -411,7 +526,7 @@
       }
     };
 
-    // 24문항 (12대 원형 각 8회 완벽 분배 + 옵션 A, B 반영)
+    // 24문항 (12대 원형 각 8회 완벽 분배 + 12번 옵션 A, 24번 옵션 B 적용)
     const questions = [
       {
         question: "주말이나 휴일에 나만의 완벽한 하루를 보낸다면?",
@@ -513,7 +628,7 @@
         ]
       },
       {
-        // 12번: 옵션 A 기반 (EXPLORER, MAGICIAN, EVERYMAN, INNOCENT 밸런스 매핑)
+        // 12번: 옵션 A 기반 (EXPLORER, MAGICIAN, EVERYMAN, INNOCENT)
         question: "몸과 마음의 에너지가 완전히 고갈되었을 때, 무의식적으로 찾는 긴급 처방은?",
         choices: [
           { text: "모든 연락을 끊고 낯선 곳으로 훌쩍 떠나거나 인적 없는 길을 무작정 걷는다.", type: "EXPLORER" },
@@ -622,7 +737,7 @@
         ]
       },
       {
-        // 24번: 옵션 B 기반 (CAREGIVER, JESTER, LOVER, CREATOR 밸런스 매핑)
+        // 24번: 옵션 B 기반 (CAREGIVER, JESTER, LOVER, CREATOR)
         question: "온전한 나만의 공간(방/작업실)을 새롭게 꾸밀 때 가장 먼저 고려하는 것은?",
         choices: [
           { text: "언제든 소중한 사람이 찾아와 편히 쉬다 갈 수 있는 포근하고 안락한 구성", type: "CAREGIVER" },
@@ -665,10 +780,30 @@
         const card = document.createElement('div');
         card.className = 'tarot-card';
         card.innerHTML = `
-          <div class="card-rune">${runes[idx]}</div>
+          <div class="card-rune">✦ ${runes[idx]} ✦</div>
           <div class="card-text">${choice.text}</div>
+          <div class="card-seal">❖</div>
         `;
-        card.onclick = () => selectTarot(choice.type);
+        
+        // 카드 클릭 시 위로 쑥 뽑혀 올라오는 연출 후 다음 문항 전환
+        card.onclick = () => {
+          cardsContainer.style.pointerEvents = 'none';
+           // 선택되지 않은 다른 카드들을 흐리게 처리하여 선택한 카드 강조
+          const allCards = cardsContainer.querySelectorAll('.tarot-card');
+          allCards.forEach(c => {
+            if (c !== card) c.style.opacity = '0.2';
+          });
+
+          card.classList.add('is-picked');
+          
+          // 0.8초(800ms) 동안 뽑힌 카드를 감상한 뒤 다음으로 이동
+          setTimeout(() => {
+            cardsContainer.style.pointerEvents = 'auto';
+            selectTarot(choice.type);
+          }, 800);
+        };
+
+
         cardsContainer.appendChild(card);
       });
     }
@@ -683,6 +818,7 @@
         revealArchResult();
       }
     }
+    let userResultType = ''; // 전역 변수 선언
 
     function revealArchResult() {
       document.getElementById('progress-line').style.width = '100%';
@@ -695,33 +831,86 @@
         }
       }
 
-      // 2. 동점 발생 시 무작위 1인 추첨 (공정성 보장)
+      // 2. 동점 발생 시 무작위 1인 공정 추첨
       const topTypes = [];
       for (const type in scores) {
         if (scores[type] === maxScore) {
           topTypes.push(type);
         }
       }
-      const finalType = topTypes[Math.floor(Math.random() * topTypes.length)];
-      const result = archetypes[finalType];
+      userResultType = topTypes[Math.floor(Math.random() * topTypes.length)];
+      const result = archetypes[userResultType];
 
-      // 타로 아카이브 티켓 레이아웃 렌더링
+      // 타로 아카이브 티켓 레이아웃 출력 (result-view로 감싸기)
       const board = document.getElementById('main-board');
       board.innerHTML = `
-        <div class="ticket">
-          <div class="ticket-header">Archival Certificate</div>
-          <div class="ticket-badge">${result.badge}</div>
-          <h2 class="ticket-title">${result.title}</h2>
-          <div class="ticket-divider"></div>
-          <div class="ticket-desc">${result.desc}</div>
-          <div class="ticket-footer">
-            <div class="barcode">||| | | |||| | ||| | ||</div>
-            <div class="serial-no">UNCONSCIOUS SERIAL · ${Math.random().toString(36).substring(2, 9).toUpperCase()}</div>
+        <div id="result-view">
+          <div class="ticket">
+            <div class="ticket-header">Archival Certificate</div>
+            <div class="ticket-badge">${result.badge}</div>
+            <h2 class="ticket-title">${result.title}</h2>
+            <div class="ticket-divider"></div>
+            <div class="ticket-desc">${result.desc}</div>
+            <div class="ticket-footer">
+              <div class="barcode">||| | | |||| | ||| | ||</div>
+              <div class="serial-no">UNCONSCIOUS SERIAL · ${Math.random().toString(36).substring(2, 9).toUpperCase()}</div>
+            </div>
           </div>
+          <button class="secondary-btn" onclick="openArchiveViewer()">✦ 12대 원형 전체 도감 열람</button>
           <button class="primary-btn" onclick="location.reload()">새로운 타로 덱 뽑기</button>
+        </div>
+
+        <!-- 12대 원형 도감 넘김 뷰어 -->
+        <div id="archive-view" class="archive-viewer">
+          <div class="ticket" id="archive-card-box"></div>
+          <div class="viewer-nav">
+            <button class="nav-arrow-btn" onclick="slideArchive(-1)">◀</button>
+            <span class="viewer-counter" id="archive-counter">01 / 12</span>
+            <button class="nav-arrow-btn" onclick="slideArchive(1)">▶</button>
+          </div>
+          <button class="secondary-btn" onclick="closeArchiveViewer()">내 결과 티켓으로 돌아가기</button>
         </div>
       `;
     }
+
+    const archetypeKeys = Object.keys(archetypes);
+    let currentArchiveIdx = 0;
+
+    function openArchiveViewer() {
+      document.getElementById('result-view').style.display = 'none';
+      document.getElementById('archive-view').style.display = 'block';
+      // 사용자가 뽑은 결과 카드 번호부터 시작
+      currentArchiveIdx = archetypeKeys.indexOf(userResultType);
+      renderArchiveCard();
+    }
+
+    function closeArchiveViewer() {
+      document.getElementById('archive-view').style.display = 'none';
+      document.getElementById('result-view').style.display = 'block';
+    }
+
+    function slideArchive(direction) {
+      currentArchiveIdx += direction;
+      if (currentArchiveIdx < 0) currentArchiveIdx = archetypeKeys.length - 1;
+      if (currentArchiveIdx >= archetypeKeys.length) currentArchiveIdx = 0;
+      renderArchiveCard();
+    }
+
+    function renderArchiveCard() {
+      const typeKey = archetypeKeys[currentArchiveIdx];
+      const item = archetypes[typeKey];
+      const cardNum = (currentArchiveIdx + 1).toString().padStart(2, '0');
+
+      document.getElementById('archive-counter').innerText = `${cardNum} / 12`;
+      document.getElementById('archive-card-box').innerHTML = `
+        <div class="ticket-header">Arcana Archive Entry</div>
+        <div class="ticket-badge">${item.badge}</div>
+        <h2 class="ticket-title">${item.title}</h2>
+        <div class="ticket-divider"></div>
+        <div class="ticket-desc">${item.desc}</div>
+      `;
+    }
+
   </script>
 </body>
 </html>
