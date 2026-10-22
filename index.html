@@ -142,6 +142,13 @@
       color: #ffffff;
       transform: translateY(-2px);
     }
+.intro-title,
+.result-title,
+.question-text,
+.choice-btn{
+  word-break: keep-all; /* 단어가 중간에 잘리지 않고 통째로 다음 줄로 이동 */
+  overflow-wrap: break-word;
+}
 
     /* 결과 화면 */
     .result-box {
@@ -221,9 +228,9 @@
         본 검사는 12가지 대표 원형 중 나의 사고와 선택을 이끄는 <strong>핵심 동기, 고유한 강점</strong>과 경계해야 할 <strong>무의식 속 그림자</strong>를 진단합니다.
       </div>
       <div class="intro-meta">
-        <span>소요 시간 약 3분</span>
+        <span>소요 시간 약 6분</span>
         <span>•</span>
-        <span>총 12문항</span>
+        <span>총 24문항</span>
       </div>
       <button class="primary-btn" onclick="startQuiz()">검사 시작하기</button>
     </div>
@@ -233,7 +240,7 @@
       <div class="progress-bar">
         <div class="progress" id="progress"></div>
       </div>
-      <div class="question-title" id="q-counter">질문 1 / 12</div>
+      <div class="question-title" id="q-counter">질문 1 / 24</div>
       <div class="question-text" id="q-text"></div>
       <div class="choices-box" id="choices-container"></div>
     </div>
@@ -303,6 +310,7 @@
       }
     };
 
+    // 총 24문항 데이터 (각 원형 정확히 8회 균등 배정)
     const questions = [
       {
         question: "주말이나 휴일에 나만의 완벽한 하루를 보낸다면?",
@@ -404,12 +412,120 @@
         ]
       },
       {
-        question: "나라는 사람을 한 문장으로 정의한다면?",
+        question: "몸과 마음의 에너지가 완전히 고갈되었을 때, 무의식적으로 찾는 나만의 긴급 처방은?",
         choices: [
-          { text: "어떠한 틀에도 얽매이지 않고 길을 개척하는 자유인", type: "EXPLORER" },
-          { text: "세상의 숨은 비밀과 잠재력을 열어젖히는 연금술사", type: "MAGICIAN" },
-          { text: "누구에게나 편안한 쉼터가 되어주는 친근한 이웃", type: "EVERYMAN" },
-          { text: "세상의 어둠 속에서도 맑은 희망과 선함을 믿는 사람", type: "INNOCENT" }
+          { text: "모든 연락을 차단하고 낯선 곳으로 훌쩍 떠나거나 인적 없는 길을 무작정 걷는다.", type: "EXPLORER" },
+          { text: "깊은 명상이나 사색, 무의식적 상상에 빠져들며 혼자만의 내면 세계로 침잠한다.", type: "MAGICIAN" },
+          { text: "가장 편안한 옷을 입고 소박한 음식을 먹으며 늘 보던 익숙하고 편한 사람들과 함께 있는다.", type: "EVERYMAN" },
+          { text: "\"결국 다 잘 풀릴 거야\"라며 순수했던 시절의 추억이나 따뜻하고 힐링되는 동화 같은 콘텐츠를 찾는다.", type: "INNOCENT" }
+        ]
+      },
+      {
+        question: "예상치 못한 큰돈이나 여유 자금이 생겼을 때 나의 첫 소비 방식은?",
+        choices: [
+          { text: "평소 꼭 갖고 싶었던 고성능 창작 장비나 도구를 구입한다.", type: "CREATOR" },
+          { text: "아무 계획 없이 낯선 나라로 훌쩍 떠나는 여행 티켓을 끊는다.", type: "EXPLORER" },
+          { text: "분산 투자와 자산 시스템을 구축해 흔들리지 않는 재정 기반을 다진다.", type: "RULER" },
+          { text: "부모님이나 소중한 사람에게 필요한 선물을 사주거나 후원한다.", type: "CAREGIVER" }
+        ]
+      },
+      {
+        question: "뼈아픈 실패나 좌절을 겪었을 때 내가 무의식적으로 보이는 첫 반응은?",
+        choices: [
+          { text: "\"이대로 끝낼 순 없어!\" 이를 악물고 두 배로 노력해 설욕을 다짐한다.", type: "HERO" },
+          { text: "감정을 추스르고 왜 실패했는지 원인을 복기하며 분석 노트를 쓴다.", type: "SAGE" },
+          { text: "\"인생 원래 그런 거지 뭐!\" 자조 섞인 농담으로 털어내며 웃어넘긴다.", type: "JESTER" },
+          { text: "\"더 좋은 뜻이 있을 거야.\" 긍정적인 믿음을 잃지 않으려 스스로를 다독인다.", type: "INNOCENT" }
+        ]
+      },
+      {
+        question: "나와 가치관이 정반대인 사람과 한 팀이 되어 일해야 할 때 나의 처세는?",
+        choices: [
+          { text: "불필요한 마찰을 피하고 상식선에서 무난하게 보폭을 맞춘다.", type: "EVERYMAN" },
+          { text: "상대방의 숨은 심리와 욕구를 꿰뚫어 보고 자연스럽게 내 페이스로 유도한다.", type: "MAGICIAN" },
+          { text: "억지로 맞출 생각 없이, 상대의 모순과 위선을 정면으로 꼬집는다.", type: "REBEL" },
+          { text: "먼저 사적인 호감을 표현하고 진심 어린 식사 자리를 만들어 마음의 벽을 허문다.", type: "LOVER" }
+        ]
+      },
+      {
+        question: "영화나 소설을 볼 때 가장 강하게 감정 이입되는 인물은?",
+        choices: [
+          { text: "온갖 시련과 상처를 이겨내고 끝내 승리를 쟁취하는 주인공", type: "HERO" },
+          { text: "부조리한 시스템과 위선적인 법을 과감하게 조롱하고 부수는 안티히어로", type: "REBEL" },
+          { text: "세상의 몰이해 속에서도 자신만의 예술과 걸작에 집착하는 장인", type: "CREATOR" },
+          { text: "끝없는 어둠 속에서도 순수한 동심과 희망을 끝까지 간직한 인물", type: "INNOCENT" }
+        ]
+      },
+      {
+        question: "누군가 나에게 무리한 부탁을 하거나 선을 넘으려 할 때 나는?",
+        choices: [
+          { text: "단호한 표정으로 원칙과 한계를 명확하게 선언해 차단한다.", type: "RULER" },
+          { text: "거절하면 상대가 상처받을까 봐 차마 거절하지 못하고 떠안는다.", type: "CAREGIVER" },
+          { text: "불편한 기색을 적당히 비추며 다른 사람들의 분위기를 살핀다.", type: "EVERYMAN" },
+          { text: "구구절절 설명하기보다 그 자리에서 조용히 거리를 두고 사라진다.", type: "EXPLORER" }
+        ]
+      },
+      {
+        question: "진정한 친구 관계를 유지하기 위해 가장 필수적인 요소는?",
+        choices: [
+          { text: "서로의 가장 깊은 치부와 비밀까지 나눌 수 있는 정서적 친밀감", type: "LOVER" },
+          { text: "위아래 없이 서로 동등하게 편한 모습 그대로 기댈 수 있는 편안함", type: "EVERYMAN" },
+          { text: "지적인 자극을 주고받으며 함께 성장할 수 있는 깊이 있는 대화", type: "SAGE" },
+          { text: "아무 말 없이 같이 있기만 해도 배를 잡고 웃을 수 있는 유쾌함", type: "JESTER" }
+        ]
+      },
+      {
+        question: "내가 가장 경멸하거나 절대 닮고 싶지 않은 사람의 유형은?",
+        choices: [
+          { text: "눈앞의 현실에만 갇혀 어떠한 영감이나 비전도 품지 못하는 사람", type: "MAGICIAN" },
+          { text: "부당한 대우를 받으면서도 군소리 없이 복종하는 비겁한 사람", type: "REBEL" },
+          { text: "자기 잇속만 챙기고 타인의 아픔에는 눈곱만큼도 관심 없는 사람", type: "CAREGIVER" },
+          { text: "조금만 힘들어도 쉽게 징징대고 포기해 버리는 나약한 사람", type: "HERO" }
+        ]
+      },
+      {
+        question: "매일 반복되는 평범한 일상 속에서 문득 허무함이 밀려올 때 나의 행동은?",
+        choices: [
+          { text: "당장 짐을 싸서 일상을 탈출하거나 새로운 취미/루틴을 시작한다.", type: "EXPLORER" },
+          { text: "그 공허한 감정을 글, 그림, 음악, 코드 등 창작물로 승화시킨다.", type: "CREATOR" },
+          { text: "친구들을 불러 모아 실컷 떠들며 맛있는 술과 음식으로 기분을 푼다.", type: "JESTER" },
+          { text: "명상이나 사색을 통해 내면의 직관과 무의식이 보내는 신호를 읽는다.", type: "MAGICIAN" }
+        ]
+      },
+      {
+        question: "내가 속한 집단(학교, 직장 등)에서 내가 가장 견디기 힘든 부조리는?",
+        choices: [
+          { text: "지휘 체계가 엉망이고 규칙이 없어 모두가 갈팡질팡하는 무질서", type: "RULER" },
+          { text: "서로를 불신하고 뒤에서 험담과 음모를 꾸미는 삭막한 공기", type: "INNOCENT" },
+          { text: "객관적인 팩트나 근거 없이 편견과 헛소문만으로 의사결정을 내리는 것", type: "SAGE" },
+          { text: "인간에 대한 따뜻한 애정 없이 서로를 부품이나 도구로만 취급하는 것", type: "LOVER" }
+        ]
+      },
+      {
+        question: "나에게 진정한 '성공'의 의미는 무엇인가요?",
+        choices: [
+          { text: "남들이 넘볼 수 없는 뛰어난 실력으로 당당하게 최고가 되는 것", type: "HERO" },
+          { text: "세상을 바꾸는 패러다임을 제시하고 기적 같은 변화를 이끄는 것", type: "MAGICIAN" },
+          { text: "평범하지만 좋은 이웃들과 함께 소박하고 평화롭게 어우러져 사는 것", type: "EVERYMAN" },
+          { text: "어떤 풍파에도 때 묻지 않고 맑고 순수한 영혼을 지켜내는 것", type: "INNOCENT" }
+        ]
+      },
+      {
+        question: "복잡한 문제를 해결해야 할 때 내가 가장 먼저 의지하는 방식은?",
+        choices: [
+          { text: "관련 서적, 논문, 데이터 등 검증된 지식을 철저하게 수집한다.", type: "SAGE" },
+          { text: "전체적인 직관과 통찰로 문제의 이면에 숨은 핵심 변수를 짚어낸다.", type: "MAGICIAN" },
+          { text: "역할을 명확히 나누고 마감 기한과 절차를 정해 프로세스로 푼다.", type: "RULER" },
+          { text: "직접 몸으로 부딪쳐 현장을 돌아다니며 단서를 찾아낸다.", type: "EXPLORER" }
+        ]
+      },
+      {
+        question: "내 방이나 작업실 등 온전한 나만의 공간을 새롭게 채울 때 가장 먼저 고려하는 것은?",
+        choices: [
+          { text: "언제든 손님이나 소중한 사람이 찾아와 편히 쉬다 갈 수 있는 포근하고 안락한 구성", type: "CAREGIVER" },
+          { text: "독특한 포스터, 피규어, 유머러스한 소품 등 볼 때마다 피식 웃음이 나오는 재미있는 디테일", type: "JESTER" },
+          { text: "은은한 조명, 아늑한 향초와 음악 등 오감을 만족시키고 무드를 극대화하는 감성적인 분위기", type: "LOVER" },
+          { text: "기성품을 그대로 두기보다 내 손으로 직접 커스텀하거나 독창적인 개성이 돋보이는 오브제 배치", type: "CREATOR" }
         ]
       }
     ];
