@@ -19,11 +19,65 @@
     .card {
       background: #131c2e;
       border: 1px solid #1e293b;
-      padding: 32px 24px;
+      padding: 36px 26px;
       border-radius: 18px;
       width: 100%;
       max-width: 520px;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 시작 화면 스타일 */
+    .intro-box {
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+    .intro-badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .intro-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 18px;
+      color: #f8fafc;
+    }
+    .intro-desc {
+      font-size: 0.96rem;
+      line-height: 1.75;
+      color: #cbd5e1;
+      margin-bottom: 28px;
+      text-align: left;
+      background: #090d16;
+      border: 1px solid #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .intro-meta {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 24px;
+    }
+    .intro-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 퀴즈 영역 스타일 (기본적으로 숨김 처리) */
+    #quiz-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
     }
     .progress-bar {
       height: 6px;
@@ -78,13 +132,11 @@
       transform: translateY(-2px);
       color: #ffffff;
     }
+
+    /* 결과 화면 스타일 */
     .result-box {
       text-align: center;
       animation: fadeIn 0.4s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
     .result-badge {
       display: inline-block;
@@ -115,36 +167,63 @@
       border-radius: 12px;
       text-align: left;
     }
-    .restart-btn {
+
+    /* 공통 버튼 */
+    .primary-btn {
       width: 100%;
       background: linear-gradient(135deg, #38bdf8, #6366f1);
       color: #ffffff;
       border: none;
       font-weight: 700;
-      padding: 14px 20px;
-      border-radius: 10px;
+      padding: 15px 20px;
+      border-radius: 12px;
       cursor: pointer;
-      font-size: 1rem;
-      transition: opacity 0.2s;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+      transition: all 0.2s ease;
     }
-    .restart-btn:hover {
-      opacity: 0.9;
+    .primary-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
   <div class="card" id="quiz-container">
-    <div class="progress-bar">
-      <div class="progress" id="progress"></div>
+    <!-- 1. 첫 시작 안내 화면 -->
+    <div class="intro-box" id="intro-content">
+      <div class="intro-badge">Jungian Archetypes Test</div>
+      <h1 class="intro-title">나를 움직이는 무의식,<br>12대 성격 원형 검사</h1>
+      <div class="intro-desc">
+        스위스의 심리학자 <strong>칼 구스타프 융(Carl Jung)</strong>은 인류에게 공유되는 무의식의 원초적 이미지와 행동 패턴을 <strong>'원형(Archetype)'</strong>이라 불렀습니다.<br><br>
+        본 검사는 12가지 대표 원형 중 나의 사고와 선택을 이끄는 <strong>핵심 동기, 고유한 강점, 그리고 무의식 속 그림자</strong>를 진단합니다.
+      </div>
+      <div class="intro-meta">
+        <span>⏱ 소요 시간 약 3분</span>
+        <span>•</span>
+        <span>총 12문항</span>
+      </div>
+      <button class="primary-btn" onclick="startQuiz()">검사 시작하기</button>
     </div>
-    <div class="question-title" id="q-counter">질문 1 / 12</div>
-    <div class="question-text" id="q-text">질문 내용이 여기에 들어옵니다.</div>
-    <div class="choices-box" id="choices-container"></div>
+
+    <!-- 2. 실제 질문 진행 영역 -->
+    <div id="quiz-content">
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+      <div class="question-title" id="q-counter">질문 1 / 12</div>
+      <div class="question-text" id="q-text">질문 내용이 여기에 들어옵니다.</div>
+      <div class="choices-box" id="choices-container"></div>
+    </div>
   </div>
 
   <script>
-    // 12대 원형 상세 정의
     const archetypes = {
       INNOCENT: {
         title: "순수주의자 (The Innocent)",
@@ -208,7 +287,6 @@
       }
     };
 
-    // 12문항 (각 선택지가 12개 원형에 골고루 매핑됨)
     const questions = [
       {
         question: "주말이나 휴일에 나만의 완벽한 하루를 보낸다면?",
@@ -320,7 +398,6 @@
       }
     ];
 
-    // 점수 저장소 초기화
     const scores = {
       INNOCENT: 0, EVERYMAN: 0, HERO: 0, CAREGIVER: 0,
       EXPLORER: 0, REBEL: 0, LOVER: 0, CREATOR: 0,
@@ -328,6 +405,13 @@
     };
 
     let currentIndex = 0;
+
+    // 검사 시작 버튼 클릭 시 호출
+    function startQuiz() {
+      document.getElementById('intro-content').style.display = 'none';
+      document.getElementById('quiz-content').style.display = 'block';
+      renderQuestion();
+    }
 
     function renderQuestion() {
       const q = questions[currentIndex];
@@ -361,9 +445,6 @@
     }
 
     function showResult() {
-      document.getElementById('progress').style.width = '100%';
-
-      // 최다 득점 원형 선별
       let highestType = 'HERO';
       let maxScore = -1;
       for (const type in scores) {
@@ -381,13 +462,10 @@
           <div class="result-badge">${result.badge}</div>
           <h2 class="result-title">${result.title}</h2>
           <div class="result-desc">${result.desc}</div>
-          <button class="restart-btn" onclick="location.reload()">테스트 다시 하기</button>
+          <button class="primary-btn" onclick="location.reload()">테스트 다시 하기</button>
         </div>
       `;
     }
-
-    // 첫 질문 렌더링
-    renderQuestion();
   </script>
 </body>
 </html>
