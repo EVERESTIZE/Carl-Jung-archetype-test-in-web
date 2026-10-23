@@ -912,20 +912,28 @@ async function saveAndShareTicket() {
   if (!ticketElement) return;
 
   try {
-    // 1. html2canvas로 티켓 영역을 캡처 (선명도를 위해 배율 scale 2 적용)
     const canvas = await html2canvas(ticketElement, {
-      backgroundColor: '#080a10',
-      scale: 2,
-      useCORS: true
+      backgroundColor: null, // ★ 핵심 1: 배경 이중 덧칠로 어두워지는 현상 방지 (투명 베이스)
+      scale: 2,              // 선명한 해상도
+      useCORS: true,
+      logging: false,
+      // ★ 핵심 2: 복제본에서 fadeIn 애니메이션을 완전히 꺼서 100% 밝기 상태로 캡처
+      onclone: (clonedDoc) => {
+        const clonedTicket = clonedDoc.querySelector('.ticket');
+        if (clonedTicket) {
+          clonedTicket.style.animation = 'none';
+          clonedTicket.style.transition = 'none';
+          clonedTicket.style.opacity = '1';
+          clonedTicket.style.filter = 'none';
+        }
+      }
     });
 
-    // 2. 캔버스를 이미지 Blob 데이터로 변환
     canvas.toBlob(async (blob) => {
       if (!blob) return;
 
       const file = new File([blob], 'archetype-ticket.png', { type: 'image/png' });
 
-      // 3. 모바일 환경: 기기 내장 공유 창 호출 (인스타, 카톡, 이미지 저장 지원)
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
@@ -935,12 +943,10 @@ async function saveAndShareTicket() {
           });
           return;
         } catch (err) {
-          // 사용자가 공유 창을 그냥 닫은 경우는 무시
           if (err.name !== 'AbortError') console.error(err);
         }
       }
 
-      // 4. PC 또는 Web Share API 미지원 브라우저: 자동 파일 다운로드 처리
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = 'archetype-ticket.png';
@@ -949,10 +955,11 @@ async function saveAndShareTicket() {
     }, 'image/png');
 
   } catch (error) {
-    alert('이미지 생성 중 오류가 발생했습니다. 브라우저 설정을 확인해주세요.');
+    alert('이미지 저장 중 오류가 발생했습니다.');
     console.error(error);
   }
 }
+
 
   </script>
 </body>
