@@ -189,7 +189,7 @@
   position: absolute;
   bottom: 15px;
   width: 108px;        /* 135px -> 108px로 슬림화해 겹침 최소화 */
-  height: 185px;       /* 텍스트 줄바꿈 공간 확보 */
+  height: 180px;       /* 텍스트 줄바꿈 공간 확보 */
   background: radial-gradient(circle at 50% 30%, #171d2b, #080a10);
   border: 2px solid #d4af37;
   border-radius: 12px;
@@ -252,13 +252,7 @@
       z-index: 4;
     }
 
-    /* 마우스 호버 시 위로 솟아오르며 반듯하게 정렬 */
-    .tarot-card:hover {
-      transform: translateY(-50px) rotate(0deg) scale(1.08) !important;
-      z-index: 10 !important;
-      border-color: #fef08a;
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.95), 0 0 25px rgba(254, 240, 138, 0.6);
-    }
+    
 
     /* 뽑힌 카드 연출: 중앙으로 솟구치며 나머지 카드들과 확실히 분리 */
 .tarot-card.is-picked {
