@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ARCHETYPE : 무의식의 타로 아카이브</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <style>
     @font-face {
       font-family: 'choiceFont';
@@ -856,6 +858,7 @@
               <div class="serial-no">UNCONSCIOUS SERIAL · ${Math.random().toString(36).substring(2, 9).toUpperCase()}</div>
             </div>
           </div>
+          <button class="secondary-btn" onclick="saveAndShareTicket()">✦ 결과 티켓 이미지 저장 / 공유</button>
           <button class="secondary-btn" onclick="openArchiveViewer()">✦ 12대 원형 전체 도감 열람</button>
           <button class="primary-btn" onclick="location.reload()">새로운 타로 덱 뽑기</button>
         </div>
@@ -910,6 +913,52 @@
         <div class="ticket-desc">${item.desc}</div>
       `;
     }
+async function saveAndShareTicket() {
+  const ticketElement = document.querySelector('.ticket');
+  if (!ticketElement) return;
+
+  try {
+    // 1. html2canvas로 티켓 영역을 캡처 (선명도를 위해 배율 scale 2 적용)
+    const canvas = await html2canvas(ticketElement, {
+      backgroundColor: '#080a10',
+      scale: 2,
+      useCORS: true
+    });
+
+    // 2. 캔버스를 이미지 Blob 데이터로 변환
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+
+      const file = new File([blob], 'archetype-ticket.png', { type: 'image/png' });
+
+      // 3. 모바일 환경: 기기 내장 공유 창 호출 (인스타, 카톡, 이미지 저장 지원)
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            title: 'ARCHETYPE : 무의식의 타로 아카이브',
+            text: '나의 무의식 심연 속 원형 타로 티켓을 확인해보세요.',
+            files: [file]
+          });
+          return;
+        } catch (err) {
+          // 사용자가 공유 창을 그냥 닫은 경우는 무시
+          if (err.name !== 'AbortError') console.error(err);
+        }
+      }
+
+      // 4. PC 또는 Web Share API 미지원 브라우저: 자동 파일 다운로드 처리
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'archetype-ticket.png';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }, 'image/png');
+
+  } catch (error) {
+    alert('이미지 생성 중 오류가 발생했습니다. 브라우저 설정을 확인해주세요.');
+    console.error(error);
+  }
+}
 
   </script>
 </body>
